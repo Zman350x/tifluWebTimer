@@ -41,10 +41,14 @@
         <br>
         <div id="setTime">
             <h3>Manual Set</h3>
-            <input type="number" id="hourInput" min="0" max="999" value="0"> hr
-            <input type="number" id="minuteInput" min="0" max="59" value="0"> min
-            <input type="number" id="secondInput" min="0" max="59" value="0"> sec
-            <input type="number" id="msInput" min="0" max="999" value="0"> ms
+            <input type="number" id="hourInput" min="0" max="999" value="0">
+            <label for="hourInput">hr</label>
+            <input type="number" id="minuteInput" min="0" max="59" value="0">
+            <label for="minuteInput">min</label>
+            <input type="number" id="secondInput" min="0" max="59" value="0">
+            <label for="secondInput">sec</label>
+            <input type="number" id="msInput" min="0" max="999" value="0">
+            <label for="msInput">ms</label>
             <button onclick="manualTimeSubmit()">Go!</button>
         </div>
     </div>

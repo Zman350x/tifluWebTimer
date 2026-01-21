@@ -64,6 +64,9 @@ function startTimer() {
 
             if (ms <= 0) {
                 stopTimer();
+                if (document.querySelector("#audioCheckbox").checked) {
+                    new Audio('250629__kwahmah_02__alarm1.mp3').play();
+                }
                 return;
             }
 

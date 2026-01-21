@@ -1,5 +1,6 @@
 let timerDecrementTime = 0;
 let timer;
+let timerActive = false;
 
 window.addEventListener("load", () => {
     const dropdown = document.querySelector("#dropdown");
@@ -14,10 +15,15 @@ window.addEventListener("load", () => {
 })
 
 function setDecrementTime(ms) {
+    if (timerActive) {
+        return;
+    }
     timerDecrementTime = ms;
+    setTimerText(ms);
 }
 
 function startTimer() {
+    timerActive = true;
     const startTime = Date.now();
 
     if (document.querySelector("#dropdown").value === "incremental") {
@@ -46,6 +52,7 @@ function startTimer() {
 function stopTimer() {
     clearInterval(timer);
     document.querySelector("#timerText").innerText = "00:00:00.000";
+    timerActive = false;
 }
 
 function getTime(ms) {

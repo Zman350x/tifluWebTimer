@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
     dropdown.addEventListener("change",() => {
         const decrementalOptions = document.querySelector("#decrementalOptions");
         stopTimer();
-        if (incrementalTimer()) {
+        if (isIncrementalTimer()) {
             decrementalOptions.classList.add("hidden");
         } else {
             decrementalOptions.classList.remove("hidden");
@@ -25,7 +25,20 @@ window.addEventListener("load", () => {
             setTimerText(0);
         }
     });
+
+    addInputListeners();
 });
+
+function addInputListeners() {
+    const hourInput = document.querySelector("#hourInput");
+    hourInput.addEventListener("change", () => highlightRedIfBad(hourInput));
+    const minuteInput = document.querySelector("#minuteInput");
+    minuteInput.addEventListener("change", () => highlightRedIfBad(minuteInput));
+    const secondInput = document.querySelector("#secondInput");
+    secondInput.addEventListener("change", () => highlightRedIfBad(secondInput));
+    const msInput = document.querySelector("#msInput");
+    msInput.addEventListener("change", () => highlightRedIfBad(msInput));
+}
 
 function setDecrementTime(ms) {
     if (timerActive) {
@@ -44,7 +57,7 @@ function startTimer() {
     const startTime = Date.now() - timerIncrementTime;
     const pauseButton = document.querySelector("#pause");
 
-    if (incrementalTimer()) {
+    if (isIncrementalTimer()) {
         timer = setInterval(() => {
             setTimerText(Date.now() - startTime);
         }, 1000/60)
@@ -91,8 +104,37 @@ function stopTimer() {
     timerDecrementTime = 0;
 }
 
-function incrementalTimer() {
+function manualTimeSubmit() {
+    const hours = document.querySelector("#hourInput");
+    const minutes = document.querySelector("#minuteInput");
+    const seconds = document.querySelector("#secondInput");
+    const ms = document.querySelector("#msInput");
+    if (inputIsValid(hours) && inputIsValid(minutes) && inputIsValid(seconds) && inputIsValid(ms))
+        setDecrementTime(3600000 * parseInt(hours.value) + 60000 * parseInt(minutes.value) + 1000 * parseInt(seconds.value) + parseInt(ms.value));
+    else
+        alert("Invalid value(s)!");
+}
+
+function isIncrementalTimer() {
     return document.querySelector("#dropdown").value === "incremental";
+}
+
+function highlightRedIfBad(element) {
+    if (element.value === "")
+        element.value = 0;
+
+    if (inputIsValid(element)) {
+        element.classList.remove("redBorder");
+    } else {
+        element.classList.add("redBorder");
+    }
+}
+
+function inputIsValid(inputElement) {
+    const elementValue = parseInt(inputElement.value);
+    const elementMax = parseInt(inputElement.max);
+    const elementMin = parseInt(inputElement.min);
+    return !(isNaN(inputElement.value) || elementValue > elementMax || elementValue < elementMin)
 }
 
 function getTime(ms) {

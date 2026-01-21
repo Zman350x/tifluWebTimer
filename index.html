@@ -38,6 +38,15 @@
             <button id="30m" onclick="setDecrementTime(1800000)">30m</button>
             <button id="1h" onclick="setDecrementTime(3600000)">1h</button>
         </div>
+        <br>
+        <div id="setTime">
+            <h3>Manual Set</h3>
+            <input type="number" id="hourInput" min="0" max="999" value="0"> hr
+            <input type="number" id="minuteInput" min="0" max="59" value="0"> min
+            <input type="number" id="secondInput" min="0" max="59" value="0"> sec
+            <input type="number" id="msInput" min="0" max="999" value="0"> ms
+            <button onclick="manualTimeSubmit()">Go!</button>
+        </div>
     </div>
     <br><br><br>
 

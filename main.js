@@ -4,6 +4,7 @@ let timer;
 let timerActive = false;
 let timerPaused = false;
 let displayMs = true;
+let controller;
 
 window.addEventListener("load", () => {
     const dropdown = document.querySelector("#dropdown");
@@ -52,6 +53,7 @@ function startTimer() {
     if (timerActive && !timerPaused) {
         return;
     }
+    controller = new AbortController();
     timerActive = true;
     timerPaused = false;
     const startTime = Date.now() - timerIncrementTime;
@@ -66,7 +68,8 @@ function startTimer() {
             timerPaused = true;
             timerIncrementTime = Date.now() - startTime;
             clearInterval(timer);
-        }, {once: true});
+        }, {once: true,
+                    signal: controller.signal});
 
     } else {
         let ms = timerDecrementTime;
@@ -87,16 +90,18 @@ function startTimer() {
 
         }, 1000 / 60);
 
-        pauseButton.addEventListener("click", () => {
+        pauseButton.addEventListener("click", function decrementPauseListener() {
             timerPaused = true;
             timerDecrementTime = ms;
             clearInterval(timer);
-        }, {once: true})
+        }, {once: true,
+                    signal: controller.signal})
     }
 }
 
 function stopTimer() {
     clearInterval(timer);
+    controller.abort();
     setTimerText(0);
     timerActive = false;
     timerPaused = false;

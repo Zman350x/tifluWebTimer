@@ -28,23 +28,28 @@ window.addEventListener("load", () => {
     });
 
     const themeDropdown = document.querySelector("#theme");
-    const themeStylesheet = document.querySelector("#themeSheet");
-    themeDropdown.addEventListener("change", () => {
-        switch (themeDropdown.value) {
-            case "light":
-                themeStylesheet.href = "simpleLight.css";
-                break;
-            case "dark":
-                themeStylesheet.href = "simpleDark.css";
-                break;
-            case "green":
-                themeStylesheet.href = "greenscreen.css";
-                break;
-        }
-    })
+    themeDropdown.addEventListener("change", setStyle);
+    setStyle();
 
     addInputListeners();
 });
+
+function setStyle() {
+    const themeDropdown = document.querySelector("#theme");
+    const themeStylesheet = document.querySelector("#themeSheet");
+
+    switch (themeDropdown.value) {
+        case "light":
+            themeStylesheet.href = "simpleLight.css";
+            break;
+        case "dark":
+            themeStylesheet.href = "simpleDark.css";
+            break;
+        case "green":
+            themeStylesheet.href = "greenscreen.css";
+            break;
+    }
+}
 
 function addInputListeners() {
     const hourInput = document.querySelector("#hourInput");
